@@ -1,0 +1,22 @@
+a = 5
+
+DO UNTIL a < 1
+PRINT "Hello", "BBBB"
+a = a - 1
+LOOP
+
+IF a = 1 THEN
+PRINT "World"
+ELSEIF 5.0 > 3 THEN
+PRINT "??"
+ELSE
+PRINT "!!"
+ENDIF
+
+FOR b = 0 TO 8
+PRINT b * 1000
+NEXT b
+
+PRINT ABS(-100)
+
+END

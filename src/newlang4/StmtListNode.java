@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public class StmtListNode extends Node {
-	Environment env;
-	Node node;
+	private Node node;
 	private List<Node> childNodeList = new ArrayList<Node>();
 	private static Set<LexicalType> firstSet = new HashSet<LexicalType>();
 	static {
@@ -45,7 +44,7 @@ public class StmtListNode extends Node {
 
 			node = BlockNode.isMatch(env, lu);
 			if (node != null) {
-				if (node.Parse() == false) {
+				if (!node.Parse()) {
 					return false;
 				}
 				childNodeList.add(node);
@@ -54,7 +53,7 @@ public class StmtListNode extends Node {
 
 			node = StmtNode.isMatch(env, lu);
 			if (node != null) {
-				if (node.Parse() == false) {
+				if (!node.Parse()) {
 					return false;
 				}
 				childNodeList.add(node);

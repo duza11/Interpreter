@@ -1,8 +1,7 @@
 package newlang4;
 
 public class ProgramNode extends Node {
-	Environment env;
-	Node stmt_list;
+	private Node stmtList;
 
 	private ProgramNode (Environment env) {
 		this.env = env;
@@ -18,17 +17,20 @@ public class ProgramNode extends Node {
 		LexicalUnit lu = env.getInput().get();
 		env.getInput().unget(lu);
 
-		stmt_list = StmtListNode.isMatch(env, lu);
-		return stmt_list.Parse();
+		stmtList = StmtListNode.isMatch(env, lu);
+		if (stmtList == null) {
+			return false;
+		}
+		return stmtList.Parse();
 	}
 
 	@Override
 	public String toString() {
-		return stmt_list.toString();
+		return stmtList.toString();
 	}
 
 	@Override
 	public Value getValue() {
-		return stmt_list.getValue();
+		return stmtList.getValue();
 	}
 }

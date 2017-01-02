@@ -19,8 +19,8 @@ public class IfNode extends Node {
 		super.type = NodeType.IF_BLOCK;
 	}
 
-	public static Node isMatch(Environment env, LexicalUnit lex) {
-		if (firstSet.contains(lex.getType())) {
+	public static Node isMatch(Environment env, LexicalUnit first) {
+		if (firstSet.contains(first.getType())) {
 			return new IfNode(env);
 		}
 		return null;
@@ -189,4 +189,4 @@ public class IfNode extends Node {
 		}
 		return null;
 	}
-	}
+}

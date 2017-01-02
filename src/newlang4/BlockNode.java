@@ -39,7 +39,7 @@ public class BlockNode extends Node {
 			return body.Parse();
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

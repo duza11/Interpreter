@@ -1,9 +1,8 @@
 package newlang4;
 
 public class SubstNode extends Node {
-	Environment env;
-	Node var;
-	Node right;
+	private Node var;
+	private Node right;
 
 	private SubstNode(Environment env) {
 		this.env = env;

@@ -1,8 +1,7 @@
 package newlang4;
 
 public class IntConstantNode extends Node {
-	Node body;
-	Value v;
+	private Value v;
 
 	private IntConstantNode(LexicalUnit lu) {
 		super.type = NodeType.INT_CONSTANT;

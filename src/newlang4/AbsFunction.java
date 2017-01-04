@@ -1,10 +1,6 @@
 package newlang4;
 
 public class AbsFunction extends Function {
-	public AbsFunction() {
-		// TODO 自動生成されたコンストラクター・スタブ
-    }
-
     public Value invoke(ExprListNode arg) {
     	Value v = arg.getList().get(0).getValue();
     	switch (v.getType()) {

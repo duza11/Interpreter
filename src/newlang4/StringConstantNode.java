@@ -1,8 +1,7 @@
 package newlang4;
 
 public class StringConstantNode extends Node {
-	Node body;
-	Value v;
+	private Value v;
 
 	private StringConstantNode(LexicalUnit lu) {
 		super.type = NodeType.STRING_CONSTANT;

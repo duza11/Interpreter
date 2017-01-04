@@ -4,8 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class UnaryNode extends Node {
-	Node body;
-	Environment env;
+	private Node body;
 	private static Set<LexicalType> firstSet = new HashSet<LexicalType>();
 	static {
 		firstSet.add(LexicalType.SUB);
@@ -34,12 +33,15 @@ public class UnaryNode extends Node {
 			lu = env.getInput().get();
 			env.getInput().unget(lu);
 			body = ExprNode.isMatch(env, lu);
-			if (body != null && body.Parse()) {
-				lu = env.getInput().get();
-				if (lu.getType() == LexicalType.RP) {
-					return true;
-				}
+			if (body == null || !body.Parse()) {
+				return false;
 			}
+
+			lu = env.getInput().get();
+			if (lu.getType() == LexicalType.RP) {
+				return true;
+			}
+			return false;
 		}
 
 		if (lu.getType() == LexicalType.SUB) {
@@ -49,18 +51,6 @@ public class UnaryNode extends Node {
 			if (body != null && body.Parse()) {
 				return true;
 			}
-		}
-
-		env.getInput().unget(lu);
-		body = CallFuncNode.isMatch(env, lu);
-		if (body != null && body.Parse()) {
-			return true;
-		}
-
-		lu = env.getInput().get();
-		body = VariableNode.isMatch(env, lu);
-		if (body != null) {
-			return true;
 		}
 
 		body = IntConstantNode.isMatch(env, lu);
@@ -78,6 +68,18 @@ public class UnaryNode extends Node {
 			return true;
 		}
 
+		env.getInput().unget(lu);
+		body = CallFuncNode.isMatch(env, lu);
+		if (body != null && body.Parse()) {
+			return true;
+		}
+
+		lu = env.getInput().get();
+		body = VariableNode.isMatch(env, lu);
+		if (body != null) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -90,8 +92,6 @@ public class UnaryNode extends Node {
 	public Value getValue() {
 		Value v = body.getValue();
 		switch (v.getType()) {
-		case INTEGER:
-			return new ValueImpl(-v.getIValue(), ValueType.INTEGER);
 		case DOUBLE:
 			return new ValueImpl(-v.getDValue(), ValueType.DOUBLE);
 		default:

@@ -5,12 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ExprNode extends Node {
-	Node left;
-	Node right;
-	Node body;
-	Environment env;
-	ArrayDeque<Node> nodeStack = new ArrayDeque<Node>();
-	ArrayDeque<Operator> operatorStack = new ArrayDeque<>();
+	private Node left;
+	private Node right;
+	private Node body;
+	private ArrayDeque<Node> nodeStack = new ArrayDeque<Node>();
+	private ArrayDeque<Operator> operatorStack = new ArrayDeque<>();
 	private static Set<LexicalType> firstSet = new HashSet<LexicalType>();
 	static {
 		firstSet.add(LexicalType.SUB);
@@ -67,12 +66,15 @@ public class ExprNode extends Node {
 			lu = env.getInput().get();
 			env.getInput().unget(lu);
 			body = ExprNode.isMatch(env, lu);
-			if (body != null && body.Parse()) {
-				lu = env.getInput().get();
-				if (lu.getType() == LexicalType.RP) {
-					return body;
-				}
+			if (body == null || !body.Parse()) {
+				return null;
 			}
+
+			lu = env.getInput().get();
+			if (lu.getType() == LexicalType.RP) {
+				return body;
+			}
+			return null;
 		}
 
 		if (lu.getType() == LexicalType.SUB) {
@@ -82,6 +84,7 @@ public class ExprNode extends Node {
 			if (body != null && body.Parse()) {
 				return body;
 			}
+			return null;
 		}
 
 		body = IntConstantNode.isMatch(env, lu);

@@ -1,7 +1,7 @@
 a = 5
 
 DO UNTIL a < 1
-PRINT "Hello", "BBBB"
+PRINT "Hello", "BBBB" , 2 , "bbbb"
 a = a - 1
 LOOP
 

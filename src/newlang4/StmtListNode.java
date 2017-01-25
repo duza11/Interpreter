@@ -79,9 +79,7 @@ public class StmtListNode extends Node {
 
 	@Override
 	public Value getValue() {
-		for (Node node : childNodeList) {
-			node.getValue();
-		}
+		childNodeList.forEach(node -> node.getValue());
 		return null;
 	}
 }

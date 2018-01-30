@@ -16,8 +16,8 @@ public class Node {
         env = my_env;
     }
 
-    public NodeType getType() {
-        return type;
+    public ValueType getType() {
+        return null;
     }
 
     public boolean Parse() throws Exception {

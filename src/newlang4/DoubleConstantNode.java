@@ -16,6 +16,11 @@ public class DoubleConstantNode extends Node {
 	}
 
 	@Override
+	public ValueType getType() {
+		return v.getType();
+	}
+
+	@Override
 	public String toString() {
 		return v.getSValue();
 	}

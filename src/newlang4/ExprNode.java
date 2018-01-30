@@ -141,6 +141,11 @@ public class ExprNode extends Node {
 	}
 
 	@Override
+	public ValueType getType() {
+		return nodeStack.peek().getType();
+	}
+
+	@Override
 	public String toString() {
 		return nodeStack.peek().toString();
 	}

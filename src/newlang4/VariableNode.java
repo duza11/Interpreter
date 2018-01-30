@@ -35,6 +35,11 @@ public class VariableNode extends Node {
 	}
 
 	@Override
+	public ValueType getType() {
+		return v.getType();
+	}
+
+	@Override
 	public String toString() {
 		return var_name;
 	}

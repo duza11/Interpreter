@@ -24,49 +24,67 @@ public class BinaryNode extends Node {
 
 	@Override
 	public String toString() {
-		return operatorMap.get(operator) + "[" + left_operand + ", " + right_operand + "]";
+		return operatorMap.get(operator) + "[" + left_operand + ", "
+				+ right_operand + "]";
+	}
+
+	@Override
+	public ValueType getType() {
+		if (left_operand.getType() == ValueType.STRING
+				|| right_operand.getType() == ValueType.STRING) {
+			return ValueType.STRING;
+		}
+		if (left_operand.getType() == ValueType.DOUBLE
+				|| right_operand.getType() == ValueType.DOUBLE) {
+			return ValueType.DOUBLE;
+		}
+		return ValueType.INTEGER;
 	}
 
 	@Override
 	public Value getValue() {
-		if (left_operand.getType() == NodeType.STRING_CONSTANT || right_operand.getType() == NodeType.STRING_CONSTANT) {
+		if (getType() == ValueType.STRING) {
 			switch (operator) {
 			case ADD:
-				return new ValueImpl(left_operand.getValue().getSValue() + right_operand.getValue().getSValue(),
+				return new ValueImpl(left_operand.getValue().getSValue()
+						+ right_operand.getValue().getSValue(),
 						ValueType.STRING);
 			}
 		}
 
-		if (left_operand.getType() == NodeType.DOUBLE_CONSTANT || right_operand.getType() == NodeType.DOUBLE_CONSTANT) {
+		if (getType() == ValueType.DOUBLE) {
 			switch (operator) {
 			case ADD:
-				return new ValueImpl(left_operand.getValue().getDValue() + right_operand.getValue().getDValue(),
+				return new ValueImpl(left_operand.getValue().getDValue()
+						+ right_operand.getValue().getDValue(),
 						ValueType.DOUBLE);
 			case SUB:
-				return new ValueImpl(left_operand.getValue().getDValue() - right_operand.getValue().getDValue(),
+				return new ValueImpl(left_operand.getValue().getDValue()
+						- right_operand.getValue().getDValue(),
 						ValueType.DOUBLE);
 			case MUL:
-				return new ValueImpl(left_operand.getValue().getDValue() * right_operand.getValue().getDValue(),
+				return new ValueImpl(left_operand.getValue().getDValue()
+						* right_operand.getValue().getDValue(),
 						ValueType.DOUBLE);
 			case DIV:
-				return new ValueImpl(left_operand.getValue().getDValue() / right_operand.getValue().getDValue(),
+				return new ValueImpl(left_operand.getValue().getDValue()
+						/ right_operand.getValue().getDValue(),
 						ValueType.DOUBLE);
 			}
-		} else {
-			switch (operator) {
-			case ADD:
-				return new ValueImpl(left_operand.getValue().getIValue() + right_operand.getValue().getIValue(),
-						ValueType.INTEGER);
-			case SUB:
-				return new ValueImpl(left_operand.getValue().getIValue() - right_operand.getValue().getIValue(),
-						ValueType.INTEGER);
-			case MUL:
-				return new ValueImpl(left_operand.getValue().getIValue() * right_operand.getValue().getIValue(),
-						ValueType.INTEGER);
-			case DIV:
-				return new ValueImpl(left_operand.getValue().getIValue() / right_operand.getValue().getIValue(),
-						ValueType.INTEGER);
-			}
+		}
+		switch (operator) {
+		case ADD:
+			return new ValueImpl(left_operand.getValue().getIValue()
+					+ right_operand.getValue().getIValue(), ValueType.INTEGER);
+		case SUB:
+			return new ValueImpl(left_operand.getValue().getIValue()
+					- right_operand.getValue().getIValue(), ValueType.INTEGER);
+		case MUL:
+			return new ValueImpl(left_operand.getValue().getIValue()
+					* right_operand.getValue().getIValue(), ValueType.INTEGER);
+		case DIV:
+			return new ValueImpl(left_operand.getValue().getIValue()
+					/ right_operand.getValue().getIValue(), ValueType.INTEGER);
 		}
 		return super.getValue();
 	}

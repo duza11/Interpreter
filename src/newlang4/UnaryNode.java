@@ -84,6 +84,11 @@ public class UnaryNode extends Node {
 	}
 
 	@Override
+	public ValueType getType() {
+		return body.getValue().getType();
+	}
+
+	@Override
 	public String toString() {
 		return "-[" + body + "]";
 	}
